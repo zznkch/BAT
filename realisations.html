@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baticonfort - Nos Réalisations en Plâtrerie</title>
+    <meta name="description" content="Découvrez nos réalisations en plâtrerie : cloisons, faux plafonds, enduits décoratifs, isolation et rénovations complètes.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <style>
+        /* Styles améliorés pour les carrousels */
+        .carrousel {
+            position: relative;
+            max-width: 1200px;
+            margin: 40px auto;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            height: 600px;
+            background: var(--dark-bg);
+        }
+        
+        .carrousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .carrousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carrousel-item {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .carrousel-item-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        
+        .carrousel-actions {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 50%;
+            left: 3%;
+            right: 3%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        
+        .btn-carrousel {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: var(--black);
+            font-size: 1.5rem;
+        }
+        
+        .btn-carrousel:hover {
+            background: var(--white);
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .carrousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            z-index: 10;
+        }
+        
+        .carrousel-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carrousel-dot.active {
+            background: var(--white);
+            transform: scale(1.2);
+        }
+        
+        .carrousel-dot:hover {
+            background: var(--white);
+        }
+        
+        /* Section styles */
+        .carrousel-section {
+            margin: 60px 0;
+        }
+        
+        .carrousel-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--black);
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .carrousel-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 40px 0 60px;
+        }
+        
+        .filter-btn {
+            padding: 15px 35px;
+            background: var(--light-color);
+            border: none;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.05rem;
+            color: var(--gray-dark);
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(41, 113, 187, 0.2);
+        }
+        
+        .category-section {
+            margin: 80px 0;
+        }
+        
+        .subcategory-title {
+            margin: 40px 0 25px;
+            color: var(--gray-dark);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 20px;
+            font-size: 1.5rem;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            .carrousel {
+                height: 500px;
+                margin: 30px auto;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .carrousel {
+                height: 450px;
+            }
+            
+            .btn-carrousel {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .carrousel {
+                height: 400px;
+                border-radius: 8px;
+            }
+            
+            .carrousel-title {
+                font-size: 1.8rem;
+            }
+            
+            .btn-carrousel {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .carrousel {
+                height: 350px;
+            }
+            
+            .portfolio-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .btn-carrousel {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.jpg" alt="Logo Baticonfort" class="logo-image">
+                <span class="logo-text">BATICONFORT</span>
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu mobile">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="services.html"><i class="fas fa-tools"></i> Services</a></li>
+                <li><a href="realisations.html" class="active"><i class="fas fa-images"></i> Réalisations</a></li>
+                <li><a href="equipe.html"><i class="fas fa-users"></i> Équipe</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="certifications.html"><i class="fas fa-award"></i> Certifications</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Nos Réalisations</h1>
+            <p>Découvrez nos chantiers de plâtrerie et rénovation</p>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section">
+        <div class="container">
+            <h2 class="section-title">Galerie de Chantiers</h2>
+            <p class="section-subtitle">Plus de 100 chantiers réalisés avec expertise et passion</p>
+            
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">Tous nos travaux</button>
+                <button class="filter-btn" data-filter="plafonds">Plafonds</button>
+                <button class="filter-btn" data-filter="enduits">Enduits & Décoration</button>
+                <button class="filter-btn" data-filter="renovation">Rénovation complète</button>
+            </div>
+            
+            <!-- Catégorie: Enduits & Décoration -->
+            <div class="category-section" id="enduits-category">
+                <h3 class="carrousel-title">Enduits & Décoration</h3>
+                
+                <!-- Sous-catégorie: Enduit -->
+                <h4 class="subcategory-title">Enduit</h4>
+                
+                <!-- Carrousel 1 pour Enduit -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="enduit-carrousel-1">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/enduit/enduit (1).jpg" alt="Enduit lissé sur mur de séjour">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/enduit/enduit (5).jpg" alt="Enduit lissé sur grande surface">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/enduit/enduit (6).jpg" alt="Enduit préparatoire avant peinture">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/enduit/enduit (7).jpg" alt="Enduit de lissage sur plafond">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/enduit/enduit (8).jpg" alt="Enduit sur angle de mur">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-enduit-1"></div>
+                    </div>
+                </div>
+                
+                <!-- Carrousel 2 pour Enduit -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="enduit-carrousel-2">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/enduit/enduit (2).jpg" alt="Enduit décoratif avec effets de matière">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/enduit/enduit (3).jpg" alt="Enduit sur mur courbe">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/enduit/enduit (9).jpg" alt="Enduit décoratif avec texture">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/enduit/enduit (10).jpg" alt="Enduit de rebouchage après électricité">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-enduit-2"></div>
+                    </div>
+                </div>
+                
+                <!-- Sous-catégorie: Décoration -->
+                <h4 class="subcategory-title">Décoration</h4>
+                
+                <!-- Carrousel 1 pour Décoration -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="deco-carrousel-1">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/décoration/déco (1).jpg" alt="Décoration murale avec éléments en staff">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/décoration/déco (8).jpg" alt="Décoration de plafond avec motifs">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/décoration/déco (9).jpg" alt="Décoration de salle de bain avec éléments muraux">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-deco-1"></div>
+                    </div>
+                </div>
+                
+                <!-- Carrousel 2 pour Décoration -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="deco-carrousel-2">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/décoration/déco (2).jpg" alt="Moulures et corniches décoratives">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/décoration/déco (3).jpg" alt="Rosace centrale de plafond">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/décoration/déco (4).jpg" alt="Décoration de cheminée en staff">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-deco-2"></div>
+                    </div>
+                </div>
+                
+                <!-- Carrousel 3 pour Décoration -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="deco-carrousel-3">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/décoration/déco (5).jpg" alt="Plafond avec moulures complexes">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/décoration/déco (6).jpg" alt="Décoration de porte avec encadrement">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/décoration/déco (7).jpg" alt="Décoration murale avec panneaux">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-deco-3"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Catégorie: Plafonds -->
+            <div class="category-section" id="plafonds-category">
+                <h3 class="carrousel-title">Plafonds</h3>
+                
+                <!-- Carrousel 1 pour Plafonds -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="plafond-carrousel-1">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (1).jpg" alt="Plafond moderne avec éclairage intégré">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (2).jpg" alt="Plafond en staff avec moulures">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (3).jpg" alt="Plafond acoustique de bureau">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (4).jpg" alt="Plafond décoratif avec structure moderne">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (5).jpg" alt="Plafond à caissons traditionnel">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-plafond-1"></div>
+                    </div>
+                </div>
+                
+                <!-- Carrousel 2 pour Plafonds -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="plafond-carrousel-2">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (6).jpg" alt="Plafond bas avec éclairage indirect">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (7).jpg" alt="Plafond avec structure complexe">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (8).jpg" alt="Plafond classique avec rosace centrale">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-plafond-2"></div>
+                    </div>
+                </div>
+                
+                <!-- Carrousel 3 pour Plafonds -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="plafond-carrousel-3">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (9).jpg" alt="Plafond moderne avec spots encastrés">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (10).jpg" alt="Plafond de salle de bain avec ventilation intégrée">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (11).jpg" alt="Plafond avec poutres apparentes">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (12).jpg" alt="Plafond de couloir avec éclairage linéaire">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (13).jpg" alt="Plafond de chambre avec éclairage doux">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (14).jpg" alt="Plafond de bureau avec acoustique renforcée">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-plafond-3"></div>
+                    </div>
+                </div>
+                
+                <!-- Carrousel 4 pour Plafonds -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="plafond-carrousel-4">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (15).jpg" alt="Plafond avec ouverture pour verrière">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (16).jpg" alt="Plafond de séjour avec structure originale">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/plafond/plafond (17).jpg" alt="Plafond de restaurant avec ambiance chaleureuse">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-plafond-4"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Catégorie: Rénovation complète -->
+            <div class="category-section" id="renovation-category">
+                <h3 class="carrousel-title">Rénovation complète</h3>
+                
+                <!-- Carrousel pour Rénovation -->
+                <div class="carrousel-section">
+                    <div class="carrousel" id="renovation-carrousel">
+                        <div class="carrousel-container">
+                            <div class="carrousel-track">
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/renovation/renovation (1).jpg" alt="Rénovation complète d'appartement avant/après">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/renovation/renovation (2).jpg" alt="Rénovation de maison individuelle">
+                                </div>
+                                <div class="carrousel-item">
+                                    <img class="carrousel-item-img" src="assets/images/photo/renovation/renovation (3).jpg" alt="Rénovation de commerce">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carrousel-actions">
+                            <button class="btn btn-carrousel btn-carrousel-prev" aria-label="Previous slide">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-carrousel btn-carrousel-next" aria-label="Next slide">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="carrousel-dots" id="dots-renovation"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <img src="" alt="" class="modal-image" id="modalImage">
+        </div>
+    </div>
+
+    <script>
+        // Classe pour gérer les carrousels avec slide
+        class Carrousel {
+            constructor(carrouselElement) {
+                this.carrouselElement = carrouselElement;
+                this.track = carrouselElement.querySelector('.carrousel-track');
+                this.items = carrouselElement.querySelectorAll('.carrousel-item');
+                this.prevBtn = carrouselElement.querySelector('.btn-carrousel-prev');
+                this.nextBtn = carrouselElement.querySelector('.btn-carrousel-next');
+                this.dotsContainer = carrouselElement.querySelector('.carrousel-dots');
+                this.currentIndex = 0;
+                this.totalItems = this.items.length;
+                
+                this.init();
+            }
+            
+            init() {
+                // Créer les points indicateurs
+                this.createDots();
+                
+                // Ajouter les événements
+                this.prevBtn.addEventListener('click', () => this.moveSlide('previous'));
+                this.nextBtn.addEventListener('click', () => this.moveSlide('next'));
+                
+                // Ajouter le clavier
+                document.addEventListener('keydown', (e) => {
+                    if (this.carrouselElement.querySelector('.carrousel-track')) {
+                        if (e.key === 'ArrowLeft') this.moveSlide('previous');
+                        if (e.key === 'ArrowRight') this.moveSlide('next');
+                    }
+                });
+                
+                // Auto-rotation toutes les 8 secondes
+                this.autoRotate = setInterval(() => this.moveSlide('next'), 8000);
+                
+                // Arrêter l'auto-rotation au survol
+                this.carrouselElement.addEventListener('mouseenter', () => {
+                    clearInterval(this.autoRotate);
+                });
+                
+                this.carrouselElement.addEventListener('mouseleave', () => {
+                    this.autoRotate = setInterval(() => this.moveSlide('next'), 8000);
+                });
+                
+                // Afficher la première diapositive
+                this.updatePosition();
+            }
+            
+            createDots() {
+                if (!this.dotsContainer) return;
+                
+                for (let i = 0; i < this.totalItems; i++) {
+                    const dot = document.createElement('button');
+                    dot.classList.add('carrousel-dot');
+                    if (i === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => this.goToSlide(i));
+                    dot.setAttribute('aria-label', `Aller à l'image ${i + 1}`);
+                    this.dotsContainer.appendChild(dot);
+                }
+            }
+            
+            updatePosition() {
+                // Déplacer le track
+                this.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+                
+                // Mettre à jour les points
+                if (this.dotsContainer) {
+                    const dots = this.dotsContainer.querySelectorAll('.carrousel-dot');
+                    dots.forEach((dot, index) => {
+                        if (index === this.currentIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
+            }
+            
+            moveSlide(direction) {
+                if (direction === 'previous') {
+                    this.currentIndex = this.currentIndex > 0 ? this.currentIndex - 1 : this.totalItems - 1;
+                } else if (direction === 'next') {
+                    this.currentIndex = this.currentIndex < this.totalItems - 1 ? this.currentIndex + 1 : 0;
+                }
+                
+                this.updatePosition();
+                
+                // Réinitialiser le timer d'auto-rotation
+                clearInterval(this.autoRotate);
+                this.autoRotate = setInterval(() => this.moveSlide('next'), 8000);
+            }
+            
+            goToSlide(index) {
+                this.currentIndex = index;
+                this.updatePosition();
+                
+                // Réinitialiser le timer d'auto-rotation
+                clearInterval(this.autoRotate);
+                this.autoRotate = setInterval(() => this.moveSlide('next'), 8000);
+            }
+        }
+        
+        // Initialisation des carrousels
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser tous les carrousels
+            const carrousels = document.querySelectorAll('.carrousel');
+            const carrouselInstances = [];
+            
+            carrousels.forEach(carrousel => {
+                carrouselInstances.push(new Carrousel(carrousel));
+            });
+            
+            // Filtrage des catégories
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const categories = document.querySelectorAll('.category-section');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Mise à jour des boutons actifs
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Animation de transition
+                    categories.forEach(cat => {
+                        if (filter === 'all' || cat.id === `${filter}-category`) {
+                            cat.style.opacity = '0';
+                            cat.style.transform = 'translateY(20px)';
+                            cat.style.display = 'block';
+                            
+                            setTimeout(() => {
+                                cat.style.opacity = '1';
+                                cat.style.transform = 'translateY(0)';
+                            }, 50);
+                        } else {
+                            cat.style.opacity = '0';
+                            cat.style.transform = 'translateY(20px)';
+                            
+                            setTimeout(() => {
+                                cat.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Modal pour agrandir les images
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalClose = document.getElementById('modalClose');
+            
+            // Ouvrir le modal au clic sur une image
+            document.querySelectorAll('.carrousel-item-img').forEach(img => {
+                img.addEventListener('click', function() {
+                    modalImage.src = this.src;
+                    modalImage.alt = this.alt;
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Fermer le modal
+            modalClose.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Touche Échap pour fermer le modal
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'flex') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
